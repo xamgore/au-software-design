@@ -14,6 +14,9 @@ import java.nio.file.Paths;
  */
 public class Wc extends Task {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int exec() {
     String in = stdin;

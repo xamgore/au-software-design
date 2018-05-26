@@ -10,6 +10,9 @@ import ru.xamgore.tasks.Task;
  */
 public class Pwd extends Task {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int exec() {
     stdout = env.get("PWD");

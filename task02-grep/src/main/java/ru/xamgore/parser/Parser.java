@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-
+/**
+ * Parser that takes a list of tokens and translates them
+ * to abstract syntax tree, basing on a grammar rules.
+ */
 public class Parser {
 
   private static final Token EOL = new Token(TokenType.EOF, "", -1, -1);
@@ -28,10 +31,18 @@ public class Parser {
     size = tokens.size();
   }
 
+  /**
+   * @return true if the provided input can be parsed.
+   * false, for empty input.
+   */
   public boolean canParse() {
     return size != 0;
   }
 
+  /**
+   * Parse the string.
+   * @return abstract syntax tree root.
+   */
   public Statement parse() {
     return pipeSequence();
   }

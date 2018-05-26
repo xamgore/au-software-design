@@ -22,8 +22,12 @@ public class InternalCommands {
     commands.put("pwd", Pwd::new);
     commands.put("exit", Exit::new);
     commands.put("cat", Cat::new);
+    commands.put("grep", Grep::new);
   }
 
+  /**
+   * @return map of built-in commands, from name to function.
+   */
   public static Map<String, Supplier<Task>> get() {
     return commands;
   }

@@ -14,11 +14,17 @@ import static ru.xamgore.parser.lexer.Concater.concat;
  */
 public class StringsConcater extends AbstractVisitor {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Assignment s) {
     s.setValues(concat(s.getValues()));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Command s) {
     // combine "cmd" with its arguments

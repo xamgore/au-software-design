@@ -39,29 +39,29 @@ public class Grep extends Task {
       parseArgs();
 
       // check file exists & get all lines, or take stdin
-      String fileArg = cmd.getArgs()[0];
       lines = cmd.getArgs().length > 1
-        ? Files.readAllLines(Paths.get(fileArg))
+        ? Files.readAllLines(Paths.get(cmd.getArgs()[1]))
         : Arrays.asList(stdin.split("\\r?\\n"));
 
       // make a regex pattern from user's input
-      String ignore_case = cmd.hasOption(IGNORE_CASE_OPTION) ? "(?i)" : "";
-      String whole_words = cmd.hasOption(WHOLE_WORDS_OPTION) ? "\\b" : "";
+      String ignoreCase = cmd.hasOption(IGNORE_CASE_OPTION) ? "(?i)" : "";
+      String wholeWords = cmd.hasOption(WHOLE_WORDS_OPTION) ? "\\b" : "";
 
       // the last argument is a regex
-      String user_pattern = cmd.getArgs()[cmd.getArgs().length - 1];
+      String userPattern = cmd.getArgs()[0];
 
       // populate regex with additional options
-      regex = Pattern.compile(ignore_case + "(" + whole_words + user_pattern + whole_words + ")");
+      regex = Pattern.compile(ignoreCase + "(" + wholeWords + userPattern + wholeWords + ")");
 
       // parse -A argument
-      Integer lines_after = parseUnsignedInt(cmd.getOptionValue(AFTER_LINES_OPTION, "0"));
+      Integer linesAfter = parseUnsignedInt(cmd.getOptionValue(AFTER_LINES_OPTION, "0"));
 
-      stdout = process(lines_after);
-    } catch (NumberFormatException e) {
-      System.out.println("-A argument requires positive integer");
-      throw e;
-    } catch (Exception e) {
+      stdout = process(linesAfter);
+    } catch (Throwable e) {
+      if (e instanceof NumberFormatException) {
+        System.out.println("-A argument requires positive integer");
+      }
+
       printHelp("Error! " + e.toString());
       return 1;
     }
@@ -75,14 +75,18 @@ public class Grep extends Task {
 
     for (int i = 0; i < lines.size(); i++) {
       Matcher m = regex.matcher(lines.get(i));
-      if (!m.find()) continue;
+      if (!m.find()) {
+        continue;
+      }
 
       int row = i;
-      for (int left = lines_after; left > 0 && row < lines.size(); left--, row++)
+      for (int left = lines_after; left > 0 && row < lines.size(); left--, row++) {
         sb.append(lines.get(row)).append("\n");
+      }
 
-      if (lines_after > 1)
+      if (lines_after > 1) {
         sb.append("--\n");
+      }
     }
 
     return sb.toString();
@@ -92,8 +96,9 @@ public class Grep extends Task {
     CommandLineParser parser = new DefaultParser();
     cmd = parser.parse(options, args);
 
-    if (cmd.getArgs().length < 1)
+    if (cmd.getArgs().length < 1) {
       throw new ParseException("regex argument is expected");
+    }
   }
 
   private final static Options options = new Options();

@@ -10,6 +10,10 @@ import ru.xamgore.parser.lexer.TokenType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Restores positions of some tokens.
+ * Used for debug purposes.
+ */
 public class TreeFlattener implements Visitor {
   private final List<Token> res = new ArrayList<>();
   private int pos = -1;
@@ -23,12 +27,18 @@ public class TreeFlattener implements Visitor {
     s.getValues().forEach(this::add);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Command s) {
     add(s.getCmd());
     s.getArgs().forEach(this::add);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(PipeSequence s) {
     s.getCmds().get(0).accept(this);
@@ -42,6 +52,9 @@ public class TreeFlattener implements Visitor {
       });
   }
 
+  /**
+   * @return proceeded result, i.e. normalized tokens
+   */
   public List<Token> getResult() {
     return res;
   }

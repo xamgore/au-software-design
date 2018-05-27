@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bashik" />
+        <module name="task02-grep" />
+        <module name="xamgore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel>
       <module name="bashik" target="1.8" />
     </bytecodeTargetLevel>
   </component>

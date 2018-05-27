@@ -15,6 +15,9 @@ public abstract class Task {
   protected Map<String, String> env;
   protected String[] args = new String[0];
 
+  /**
+   * @return output returned by task
+   */
   public String getOutput() {
     return stdout;
   }

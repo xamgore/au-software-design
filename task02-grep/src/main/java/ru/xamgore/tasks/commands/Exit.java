@@ -8,6 +8,9 @@ import ru.xamgore.tasks.Task;
  */
 public class Exit extends Task {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int exec() {
     System.exit(0);

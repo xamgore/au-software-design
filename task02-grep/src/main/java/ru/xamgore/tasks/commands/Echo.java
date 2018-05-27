@@ -10,6 +10,9 @@ import java.util.stream.Stream;
  */
 public class Echo extends Task {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int exec() {
     stdout = Stream.of(args).collect(Collectors.joining(" "));

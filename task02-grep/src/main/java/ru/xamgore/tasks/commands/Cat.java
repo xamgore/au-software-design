@@ -12,6 +12,9 @@ import java.nio.file.Paths;
  */
 public class Cat extends Task {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int exec() {
     String in = stdin;

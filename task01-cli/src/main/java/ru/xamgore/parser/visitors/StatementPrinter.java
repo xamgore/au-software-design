@@ -8,14 +8,23 @@ import ru.xamgore.parser.lexer.Token;
 
 import java.util.function.Consumer;
 
+/**
+ * Prints statements back, used for debug.
+ */
 public class StatementPrinter implements Visitor {
   private StringBuilder res = new StringBuilder();
 
+  /**
+   * @return result of AST to string transformation.
+   */
   public String getResult() {
     return res.toString();
   }
 
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Assignment s) {
     add(s.getVar());
@@ -25,12 +34,18 @@ public class StatementPrinter implements Visitor {
     s.getValues().stream().skip(1).forEach(addWithPrefix(" "));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Command c) {
     add(c.getCmd());
     c.getArgs().forEach(addWithPrefix(" "));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(PipeSequence seq) {
     seq.getCmds().get(0).accept(this);

@@ -14,6 +14,10 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Collects tasks from the string: bindings and commands.
+ * The list of tasks is returned.
+ */
 public class ExecutorVisitor extends AbstractVisitor {
   private List<Task> tasks = new ArrayList<>();
 
@@ -21,6 +25,9 @@ public class ExecutorVisitor extends AbstractVisitor {
     InternalCommands.get();
 
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Assignment s) {
     String value = s.getValues().stream()
@@ -30,6 +37,9 @@ public class ExecutorVisitor extends AbstractVisitor {
     tasks.add(new Assign(s.getVar().getText(), value));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visit(Command s) {
     String name = s.getCmd().getText();
@@ -42,6 +52,9 @@ public class ExecutorVisitor extends AbstractVisitor {
     tasks.add(t);
   }
 
+  /**
+   * @return list of tasks: bindings and commands.
+   */
   public List<Task> getTasks() {
     return tasks;
   }

@@ -24,6 +24,9 @@ public class InternalCommands {
     commands.put("cat", Cat::new);
   }
 
+  /**
+   * @return map of built-in commands, from name to function.
+   */
   public static Map<String, Supplier<Task>> get() {
     return commands;
   }

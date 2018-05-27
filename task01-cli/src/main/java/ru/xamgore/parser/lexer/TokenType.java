@@ -1,5 +1,8 @@
 package ru.xamgore.parser.lexer;
 
+/**
+ * Types of tokens used in parser.
+ */
 public enum TokenType {
   EOF,
   WORD,    // word

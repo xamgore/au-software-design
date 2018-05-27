@@ -13,6 +13,11 @@ import java.util.Map;
 import java.util.Scanner;
 import java.nio.file.Paths;
 
+/**
+ * Read-eval-processor: displays terminal prelude and
+ * waits for user commands. On enter, executes the command
+ * and prints results back.
+ */
 public class Repl {
 
   private final Map<String, String> env;
@@ -24,6 +29,12 @@ public class Repl {
     this.env.put("PWD", Paths.get(".").toAbsolutePath().normalize().toString());
   }
 
+  /**
+   * Command processor: parses the input,
+   * defines the command that must be executed,
+   * executes it and print results to system.out
+   * @param line input string to process
+   */
   public void process(String line) {
     Lexer lex = new Lexer(line);
     Parser parser = new Parser(lex.tokenize());
@@ -49,6 +60,11 @@ public class Repl {
     System.out.println(stdin);
   }
 
+  /**
+   * Start the read-eval-process loop:
+   * display terminal prelude and wait for user commands.
+   * On enter, run the command and print results back.
+   */
   public void run() {
     Scanner input = new Scanner(System.in);
 

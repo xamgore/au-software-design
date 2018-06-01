@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>SD-RG</title>
+  <style>
+    body {
+      background: #000;
+      color: #ccc;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<script src="lib/rot.min.js"></script>
+<script src="lib/utility.js"></script>
+<script src="src/game.js"></script>
+<script src="lib/geometry.js"></script>
+
+<script src="src/mixins/movable.js"></script>
+<script src="src/mixins/destructable.js"></script>
+<script src="src/mixins/attacker.js"></script>
+<script src="src/mixins/actor.js"></script>
+<script src="src/mixins/recipient.js"></script>
+<script src="src/mixins/corpseDropper.js"></script>
+<script src="src/mixins/inventoryHolder.js"></script>
+<script src="src/mixins/sight.js"></script>
+<script src="src/mixins/armored.js"></script>
+<script src="src/mixins/armored.js"></script>
+<script src="src/mixins/weaponized.js"></script>
+<script src="src/mixins/experiencing.js"></script>
+<script src="src/mixins/equippable.js"></script>
+<script src="src/entities/monsters/behaviors.js"></script>
+
+<script src="src/map/glyphs/glyph.js"></script>
+<script src="src/map/glyphs/dynamicGlyph.js"></script>
+<script src="src/map/glyphs/tile.js"></script>
+
+<script src="src/entities/entity.js"></script>
+<script src="src/entities/player/player.js"></script>
+<script src="src/entities/monsters/creature.js"></script>
+<script src="src/entities/items/item.js"></script>
+
+<script src="src/entities/factory.js"></script>
+<script src="src/entities/player/templates.js"></script>
+<script src="src/entities/monsters/templates.js"></script>
+<script src="src/entities/items/templates.js"></script>
+<script src="src/entities/items/weapon.js"></script>
+<script src="src/map/glyphs/tilesets.js"></script>
+
+<script src="src/map/area.js"></script>
+<script src="lib/dungeon-generator/generators.js"></script>
+<script src="src/map/dungeon.js"></script>
+<script src="lib/dungeon-generator/bsp.js"></script>
+<script src="lib/dungeon-generator/fbd.js"></script>
+<script src="src/map/world.js"></script>
+<script src="lib/dungeon-generator/map.js"></script>
+
+<script src="src/log.js"></script>
+<script src="src/screens/start.js"></script>
+<script src="src/screens/help.js"></script>
+<script src="src/screens/log.js"></script>
+<script src="src/screens/levelUp.js"></script>
+<script src="src/screens/gameOver.js"></script>
+<script src="src/screens/info.js"></script>
+<script src="src/screens/play.js"></script>
+<script src="src/screens/base.js"></script>
+<script src="src/screens/dialog/qit.js"></script>
+<script src="src/screens/dialog/drop.js"></script>
+<script src="src/screens/dialog/inventory.js"></script>
+<script src="src/screens/dialog/pickup.js"></script>
+<body>
+
+<div id="titleDiv"></div>
+
+<table align="center">
+  <tr>
+    <td style="background: #111;">
+      <div id="playDiv" style="background: #111;"></div>
+    </td>
+    <td>
+      <div id="statsDiv"></div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div id="msgDiv"></div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div id="helpDiv"></div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div id="inputDiv"><input type="text" name="playerCommand"
+                                style="width: 100%; color: #fff; background: #000; border: 0;"></div>
+    </td>
+  </tr>
+</table>
+
+<script>
+  window.onload = function () {
+    // Check if rot.js is supported on this browser
+    if (ROT.isSupported()) {
+      // Initialize the game
+      Game.init()
+
+      const helpdiv = document.getElementById("helpDiv")
+      const playdiv = document.getElementById("playDiv")
+      const statsdiv = document.getElementById("statsDiv")
+      const msgdiv = document.getElementById("msgDiv")
+      const inputdiv = document.getElementById("inputDiv")
+      const titlediv = document.getElementById("titleDiv")
+
+      helpdiv.appendChild(Game.displays.help.getContainer())
+      playdiv.appendChild(Game.displays.main.getContainer())
+      statsdiv.appendChild(Game.displays.stats.getContainer())
+      msgdiv.appendChild(Game.displays.msg.getContainer())
+      titlediv.appendChild(Game.displays.title.getContainer())
+
+      Game.playDivHeight = document.getElementById("playDiv").offsetHeight
+
+      const availSize = Game.displays.stats.computeSize(Game.statsDivWidth, Game.playDivHeight)
+      Game.statsScreenWidth = availSize[0]
+      Game.statsScreenHeight = availSize[1]
+      Game.displays.stats.setOptions({width: Game.statsScreenWidth, height: Game.statsScreenHeight})
+
+      Game.switchScreen(Game.Screen.startScreen, 'title')
+
+      helpdiv.style.display = "none"
+      playdiv.style.display = "none"
+      statsdiv.style.display = "none"
+      msgdiv.style.display = "none"
+      inputdiv.style.display = "none"
+
+      titlediv.style.display = "block"
+      titlediv.style.position = "fixed"
+      titlediv.style.left = "0"
+      titlediv.style.top = "0"
+    } else {
+      alert("The rot.js library isn't supported by your browser.")
+    }
+  }
+</script>
+</body>
+</html>
